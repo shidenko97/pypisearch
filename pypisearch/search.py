@@ -28,19 +28,27 @@ class Search:
     def result(self) -> list:
         """Returns list of result instances."""
 
-        return list(filter(
-            lambda result_item: not result_item.is_empty,
-            map(
-                lambda plain_item: ResultItem(plain_text=plain_item),
-                self.plain_items
+        return list(
+            filter(
+                lambda result_item: not result_item.is_empty,
+                map(
+                    lambda plain_item: ResultItem(plain_text=plain_item),
+                    self.plain_items,
+                ),
             )
-        ))
+        )
 
     @property
     def tabulated_result(self) -> str:
         """Returns tabulated list of results."""
 
-        return tabulate.tabulate([
-            [f"{item.name} ({item.version})", item.description]
-            for item in self.result
-        ], tablefmt="plain") or "Sorry, we haven't results by your query"
+        return (
+            tabulate.tabulate(
+                [
+                    [f"{item.name} ({item.version})", item.description]
+                    for item in self.result
+                ],
+                tablefmt="plain",
+            )
+            or "Sorry, we haven't results by your query"
+        )

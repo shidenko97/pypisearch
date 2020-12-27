@@ -11,12 +11,15 @@ def main() -> None:
         description="Custom pip-search utility by pypi search line"
     )
     arg_parser.add_argument(
-        "q",
-        metavar="query", type=str, help="query for search"
+        "q", metavar="query", type=str, help="query for search"
     )
     arg_parser.add_argument(
-        "-p", "--page",
-        default=1, metavar="page", type=int, help="search page (default 1)"
+        "-p",
+        "--page",
+        default=1,
+        metavar="page",
+        type=int,
+        help="search page (default 1)",
     )
     args = arg_parser.parse_args()
 
