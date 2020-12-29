@@ -1,12 +1,14 @@
 import setuptools
 
+from pypisearch import __version__ as version
+
 
 with open("README.md", "r", encoding="utf-8") as file:
     long_description = file.read()
 
 setuptools.setup(
     name="pypisearch",
-    version="1.0.2",
+    version=version,
     author="Serhii Hidenko",
     author_email="shidenko97@gmail.com",
     description="Replacement of temporarily deprecated pip search command",
