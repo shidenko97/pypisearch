@@ -1,3 +1,6 @@
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as pkg_version
+
 import pypisearch.re_constants as const
 
 
@@ -33,3 +36,24 @@ class ResultItem:
 
         description = const.DESCRIPTION_RE.findall(self.plain_text)
         return description[0] if description else ""
+
+    @property
+    def is_installed(self) -> bool:
+        try:
+            pkg_version(self.name)
+        except PackageNotFoundError:
+            return False
+        else:
+            return True
+
+    @property
+    def get_installed_version(self) -> str:
+        return pkg_version(self.name) if self.is_installed else ""
+
+    @property
+    def installed_description(self) -> str:
+        return (
+            f"[installed {self.get_installed_version}] "
+            if self.is_installed
+            else ""
+        )

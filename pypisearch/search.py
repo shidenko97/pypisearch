@@ -45,7 +45,10 @@ class Search:
         return (
             tabulate.tabulate(
                 [
-                    [f"{item.name} ({item.version})", item.description]
+                    [
+                        f"{item.name} ({item.version})",
+                        f"{item.installed_description}{item.description}",
+                    ]
                     for item in self.result
                 ],
                 tablefmt="plain",
