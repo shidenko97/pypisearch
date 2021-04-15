@@ -6,6 +6,9 @@ from pypisearch import __version__ as version
 with open("README.md", "r", encoding="utf-8") as file:
     long_description = file.read()
 
+with open("requirements.txt", "r", encoding="utf-8") as file:
+    requirements = file.read().splitlines()
+
 setuptools.setup(
     name="pypisearch",
     version=version,
@@ -22,4 +25,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.8",
+    install_requires=requirements,
 )
