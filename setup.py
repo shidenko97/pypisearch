@@ -26,4 +26,9 @@ setuptools.setup(
     ],
     python_requires=">=3.8",
     install_requires=requirements,
+    entry_points={
+        "console_scripts": [
+            "pypisearch=pypisearch.__main__:main",
+        ],
+    },
 )

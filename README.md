@@ -9,3 +9,9 @@ One more replacement of temporarily deprecated pip search command implemented on
 ## Install and run
 - Clone this repo and run `python pypisearch <query>`
 - Install it by pip `pip install pypisearch` and run `python -m pypisearch <query>`
+
+### This fork provides `pypisearch` as a shell command
+
+- Clone this repo, cd inside and run `pip install .`
+- Run from anywhere `pypisearch <query>`.
+
