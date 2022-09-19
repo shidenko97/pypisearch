@@ -14,7 +14,7 @@ class ResultItem:
     def is_empty(self) -> bool:
         """Check is current instance empty."""
 
-        return not all([self.name, self.version, self.description])
+        return not all([self.name, self.version])
 
     @property
     def name(self) -> str:
