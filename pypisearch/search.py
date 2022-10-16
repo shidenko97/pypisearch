@@ -1,4 +1,5 @@
 import requests
+from typing import List, Optional
 
 import tabulate
 
@@ -8,35 +9,43 @@ from pypisearch.result_item import ResultItem
 
 class Search:
     """Main search process instance."""
+    pypi_search_url = "https://pypi.org/search/?q={query}&page={page}"
 
-    def __init__(self, query: str, page: int = 1) -> None:
-        self.search_url = f"https://pypi.org/search/?q={query}&page={page}"
+    def __init__(
+        self,
+        query: str,
+        page_from: str = "",
+        page_to: Optional[str] = None,
+    ) -> None:
+        page_from, page_to = int(page_from), int(page_to) if page_to else None
+        self.result = []
 
-    @property
-    def get_page_data(self) -> str:
-        """Returns page's HTML code."""
+        if page_to is None:
+            self.result = self.download_data(query=query, page=page_from)
+        else:
+            for page in range(page_from, page_to + 1):
+                result = self.download_data(query=query, page=page)
 
-        return requests.get(url=self.search_url).text
+                if not result:
+                    break
 
-    @property
-    def plain_items(self) -> list:
-        """Returns plain result items."""
+                self.result.extend(result)
 
-        return const.ITEM_RE.split(self.get_page_data)
-
-    @property
-    def result(self) -> list:
-        """Returns list of result instances."""
-
-        return list(
+    def download_data(self, *, query: str, page: int) -> List[ResultItem]:
+        url = self.pypi_search_url.format(query=query, page=page)
+        page_data = requests.get(url=url).text
+        items = const.ITEM_RE.split(page_data)
+        result = list(
             filter(
                 lambda result_item: not result_item.is_empty,
                 map(
                     lambda plain_item: ResultItem(plain_text=plain_item),
-                    self.plain_items,
+                    items,
                 ),
             )
         )
+
+        return result
 
     @property
     def tabulated_result(self) -> str:
@@ -53,5 +62,4 @@ class Search:
                 ],
                 tablefmt="plain",
             )
-            or "Sorry, we haven't results by your query"
         )
