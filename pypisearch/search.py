@@ -9,6 +9,7 @@ from pypisearch.result_item import ResultItem
 
 class Search:
     """Main search process instance."""
+
     pypi_search_url = "https://pypi.org/search/?q={query}&page={page}"
 
     def __init__(
@@ -51,15 +52,13 @@ class Search:
     def tabulated_result(self) -> str:
         """Returns tabulated list of results."""
 
-        return (
-            tabulate.tabulate(
+        return tabulate.tabulate(
+            [
                 [
-                    [
-                        f"{item.name} ({item.version})",
-                        f"{item.installed_description}{item.description}",
-                    ]
-                    for item in self.result
-                ],
-                tablefmt="plain",
-            )
+                    f"{item.name} ({item.version})",
+                    f"{item.installed_description}{item.description}",
+                ]
+                for item in self.result
+            ],
+            tablefmt="plain",
         )
