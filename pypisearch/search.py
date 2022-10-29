@@ -15,7 +15,7 @@ class Search:
     def __init__(
         self,
         query: str,
-        page_from: str = "",
+        page_from: str = "0",
         page_to: Optional[str] = None,
     ) -> None:
         page_from, page_to = int(page_from), int(page_to) if page_to else None
